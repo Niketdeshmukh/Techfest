@@ -1,0 +1,116 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: visible !important;
+}
+
+.body-container {
+  width: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
+    url("/images/b1.webp");
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  font-family: "Raleway", -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: white !important;
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+a,
+p,
+li {
+  color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+/* Event List css */
+.ant-card {
+  background: none !important;
+}
+.ant-card-body {
+  padding: 0px !important;
+}
+.ant-card-bordered .ant-card-cover {
+  height: 100%;
+}
+.event-cards > .ant-card-actions {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+  color: white;
+}
+
+.heading {
+  font-size: 2.5em;
+}
+
+.subHeading {
+  font-size: 1.4em;
+}
+
+.ant-notification-notice-with-icon .ant-notification-notice-message {
+  color: white;
+}
+/* scroller */
+::-webkit-scrollbar {
+  width: 0.1em !important;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(169, 169, 169, 0.521);
+  outline: 0.1px solid rgba(112, 128, 144, 0.554);
+}
+
+/* .registration_form {
+  background-color: rgb(34, 34, 34);
+}
+.registration_modal .ant-modal-header {
+  background-color: black;
+
+  border: none !important;
+}
+.registration_modal .ant-modal-header .ant-modal-title {
+  color: white !important;
+}
+.registration_modal > .ant-modal-content > .ant-modal-close {
+  color: white !important;
+}
+.ant-input {
+  color: white !important;
+  border: 0.5px solid black !important;
+  background-color: black !important;
+}
+.ant-dropdown {
+  /* background-color: gray !important;
+  color: white !important; */
+/* }
+
+.ant-select-arrow {
+  color: white !important;
+}
+.ant-form-item-label
+  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  color: purple !important;
+}
+.ant-input-group-addon {
+  border: none !important;
+  color: white !important;
+  background-color: black !important;
+} */

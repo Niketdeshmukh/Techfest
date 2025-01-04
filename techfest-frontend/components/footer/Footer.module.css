@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+  padding: 4em 8em;
+  gap: 20px;
+  margin-top: auto;
+  width: 100%;
+  background: linear-gradient(to right, #192b53, #5c4176);
+  color: white;
+  height: fit-content;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2em;
+}
+
+.box h3 {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: inherit;
+}
+
+.box p,
+.box a {
+  font-size: 1.1em;
+  margin-bottom: 0.5em;
+}
+
+.socialMedia {
+  display: flex;
+  gap: 20px 15px;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 4em 0;
+  }
+  .box {
+    align-items: center;
+    margin-bottom: 2em;
+    text-align: center;
+  }
+}
