@@ -5,10 +5,13 @@ const Slider = () => {
   const [activeAutoplay, setActiveAutoplay] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
   const autoplayRef = useRef();
-  const imglinks = ["/images/people.jpeg"];
+  const imglinks = [
+    "./images/techfest_dj.jpg",
+    "./images/techfest_ride.jpg","./images/techfest_setup.jpg"
+  ];
 
   const settings = {
-    maxItems: 1,
+    maxItems: imglinks.length,
     speed: 1000,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -94,7 +97,7 @@ const Slider = () => {
   const slide = (index) => {
     return (
       <div className="about_slide">
-        <img src={imglinks[index]} className="about_slider_image"></img>
+        <img src={imglinks[index]} className="about_slider_image" alt={`Slide ${index + 1}`} />
       </div>
     );
   };
