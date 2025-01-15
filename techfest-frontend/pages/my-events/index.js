@@ -1,112 +1,100 @@
 import React, { useState, useEffect } from "react";
-import { Input, Typography } from "antd";
+import { Card, Spin, Input, Button } from "antd";
+import { useRouter } from "next/router";
 import classes from "./myevents.module.css";
-import axios from "axios";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useAppContext } from "../../context/state";
-import { handleApiError } from "../../utilites";
-const { Search } = Input;
-const { Text, Title } = Typography;
-function MyEvents() {
-  const [eventList, setEventList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const value = useAppContext();
+import axios from "axios";
 
-  const { eventList: eventData } = value.state;
+function MyEvents() {
+  const router = useRouter();
+  const { state } = useAppContext();
+  const { eventList, setEventList } = state;
+  const [searchValue, setSearchValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Initialize eventList to an empty array when the component mounts
+    setEventList([]);
+  }, [setEventList]);
+
   const onSearch = async (value) => {
+    if (!value) {
+      setEventList([]);
+      return;
+    }
+
     setIsLoading(true);
     try {
-      const response = await fetch("/db.json");
-      const data = await response.json();
-      if(!response.ok){
-        throw new Error(`Failed to fetch data: ${response.statusText}`);
-      }
-      console.log("raw data:", data);
-      const { event } = data;
-      const filterEvents = event.filter((event) => 
-        event.registered_users.includes(value));
-      console.log("Fileterd events for phone no. :", filterEvents );
-        if (filterEvents.length === 0) {
-          alert("No acc found");
-        
-        setEventList(filterEvents);
-      }}
-  catch(err) {
-    console.error("error fetching events", err);
-  }
-  finally {setIsLoading(false);}
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/registered`, { phone: value });
+      setEventList(response.data);
+    } catch (err) {
+      console.error("Failed to fetch registered events", err);
+      setEventList([]); // Clear event list on error
+    } finally {
+      setIsLoading(false);
     }
-// const onSearch=(value)=>{
-// console.log("onSearch triggered with value:",value);
-// }
+  };
 
-// const onSearch = (value) => {
-//   setIsLoading(true);
-//   axios
-//     .post(
-//       `${process.env.NEXT_PUBLIC_FETCH_API}/v1/account/registered_events`,
-//       {
-//         phone: value,
-//       }
-//     )
-//     .then((response) => {
-//       let eventIdList = response?.data?.events;
-//       let filteredSearchEvents = [];
-//       let idEventLength = eventIdList.length;
-//       if (idEventLength == 0) {
-//         handleApiError({
-//           status: 400,
-//           data: { errors: [{ message: "No account found here" }] },
-//         });
-//         return setIsLoading(false);
-//       }
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    if (!value) {
+      setEventList([]);
+    }
+  };
 
-//       for (let i = 0; i <= 2; i++) {
-//         if (idEventLength == 0) {
-//           break;
-//         }
-//         eventData[i].events.forEach((event) => {
-//           return eventIdList.forEach((id) => {
-//             if (event.event_id == id) {
-//               idEventLength--;
-//               return filteredSearchEvents.push(event);
-//             }
-//           });
-//         });
-//       }
-//       setEventList(filteredSearchEvents);
-//       setIsLoading(false);
-//     })
-//     .catch((err) => {
-//       setIsLoading(false);
-//       handleApiError(err.response);
-//     });
-// };
-
-return (
-  <div className={classes.container}>
-    <Search
-      style={{ maxWidth: "50%", marginTop: "100px" }}
-      className={classes.search_bar}
-      placeholder={
-        isLoading ? "loading..." : "please enter your registered mobile no."
-      }
-      disabled={isLoading}
-      enterButton="Search"
-      size="large"
-      onSearch={onSearch}
-    />
-    <div className={classes.event_container}>
-      {eventList.length>0?(
-        eventList.map((event)=>(
-          <div key={event.event_id} className={classes.event_box}>
-          <h1> {event.event_name}</h1>
-          <p>{event.event_description}</p>
-          </div>
-        ))
-      ):(<p>No events found.</p>)}
+  return (
+    <div className={classes.container}>
+      <h1 className="heading">My Events</h1>
+      <Input.Search
+        placeholder="Enter phone number"
+        enterButton="Search"
+        size="large"
+        onSearch={onSearch}
+        onChange={handleInputChange}
+        value={searchValue}
+      />
+      <div className={classes.site_card_wrapper}>
+        {isLoading ? (
+          <Spin
+            indicator={
+              <LoadingOutlined
+                size="large"
+                style={{ fontSize: 42, color: "white" }}
+                spin
+              />
+            }
+          />
+        ) : (
+          eventList.length === 0 ? (
+            <div className={classes.defaultMessage}>
+              <h2>Welcome to TechFest!</h2>
+              <p>Please enter your phone number to see your registered events or register for a new event.</p>
+              {/* <img src="/path/to/your/theme/image.png" alt="TechFest" className={classes.defaultImage} /> */}
+            </div>
+          ) : (
+            eventList.map((event, i) => (
+              <Card
+                key={i}
+                hoverable
+                cover={<img alt={event.event_name} src={event.event_image} />}
+                className={classes.cardss}
+              >
+                <Card.Meta
+                  title={event.event_name}
+                  description={event.event_description}
+                />
+                <div className={classes.card_buttons}>
+                  <Button type="primary" onClick={() => router.push(`/my-events/${event.event_id}`)}>Explore</Button>
+                </div>
+              </Card>
+            ))
+          )
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default MyEvents;
