@@ -7,18 +7,16 @@ const AppContext = createContext();
 export function AppWrapper({ children }) {
   const [isRegisterVisible, setisRegisterVisible] = useState(false);
   const [eventList, setEventList] = useState([]);
-  useEffect(async () => {
-    //fetch event list
-    let response;
-    try {
-      response = await axios.get(
-        `${process.env.NEXT_PUBLIC_FETCH_API}/v1/events`
-      );
-    } catch (err) {
-      handleApiError(err.response);
-    }
-
-    setEventList(response?.data?.competitions);
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_FETCH_API}/events`);
+        setEventList(response.data);
+      } catch (err) {
+        handleApiError(err.response);
+      }
+    };
+    fetchEvents();
   }, []);
 
   return (
