@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Event = require("../models/Event");
+const User = require("../models/User"); // Assuming you have a User model
 
 // Fetch all events
 router.get("/events", async (req, res) => {
@@ -28,12 +29,15 @@ router.post("/events/registered", async (req, res) => {
 
 // Register user for an event
 router.post("/events/register", async (req, res) => {
-  const { phone, event_id } = req.body;
+  const { name, lastname, email, gender, enrollment, phone, age, event_id } = req.body;
   try {
     const event = await Event.findOne({ event_id });
     if (!event) {
       return res.status(404).json({ error: "Event not found" });
     }
+
+    const user = new User({ name, lastname, email, gender, enrollment, phone, age });
+    await user.save();
 
     if (!event.registered_users.includes(phone)) {
       event.registered_users.push(phone);
