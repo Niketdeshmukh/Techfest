@@ -1,0 +1,33 @@
+.container {
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .cardWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 80%;
+  }
+  
+  .card {
+    width: 40%;
+    margin-right: 2%;
+  }
+  
+  .navCard {
+    width: 40%;
+  }
+  
+  .registerButton {
+    margin-top: 1em;
+  }
+  
+  .navContent {
+    margin-top: 1em;
+  }
