@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb+srv://niketdeshmukh2002:mytechfest@cluster0.nyirc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+    // Use the MongoDB URL from environment variables
+    await mongoose.connect(process.env.MONGODB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
