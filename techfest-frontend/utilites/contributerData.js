@@ -17,11 +17,11 @@ const contributersData = [
       },
       {
         name: "Niket Deshmukh",
-        avatar: "/contributers/niket.jpeg",
+        avatar: "/contributers/niket.jpg",
         role: "Developer",
         contact: {
-          phone_no: 8770871745,
-          email: "0126it201065@oriental.ac.in",
+          phone_no: 8839685242,
+          email: "niketdeshmukhh@gmail.com",
           linkedin: {
             username: "@niket-deshmukh",
             link: "https://www.linkedin.com/in/niket-deshmukh-940a85204/",
