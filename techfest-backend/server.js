@@ -1,25 +1,15 @@
-const express = require("express");
-const connectDB = require("./config/db");
-const eventRoutes = require("./routes/eventRoutes");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const path = require("path");
-
+const express = require('express');
+const cors = require('cors');
 const app = express();
-const PORT = 5000;
 
-// Connect to MongoDB
-connectDB();
+app.use(cors({
+  origin: 'https://techfest-frontend-psi.vercel.app' 
+}));
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use("/competitions", express.static(path.join(__dirname, "competitions")));
+app.use(express.json());
+app.use('/api/events', require('./routes/eventRoutes'));
 
-// Routes
-app.use("/api", eventRoutes);
-
-// Start the server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
