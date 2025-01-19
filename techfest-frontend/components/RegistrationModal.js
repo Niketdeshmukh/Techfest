@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button, Input, Form, Radio, message } from "antd";
 import axios from "axios";
 import classes from "../styles/EventModal.module.css";
 
 const RegistrationModal = ({ visible, onClose, event, onRegister }) => {
   const [form] = Form.useForm();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleRegister = async () => {
+    if (isSubmitting) return; // Prevent multiple submissions
+    setIsSubmitting(true);
+
     try {
       const values = await form.validateFields();
       await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/register`, {
@@ -14,11 +18,13 @@ const RegistrationModal = ({ visible, onClose, event, onRegister }) => {
         event_id: event.event_id,
       });
       message.success("You have successfully registered!");
-      onRegister(values);
+      // onRegister(values);
       onClose();
     } catch (error) {
       console.error("Failed to register for event", error);
-      message.error("Failed to register. Please try again.");
+      message.error(error.response?.data?.error || "Failed to register. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
