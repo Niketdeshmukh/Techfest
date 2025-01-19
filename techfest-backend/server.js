@@ -3,7 +3,10 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: 'https://techfest-frontend-psi.vercel.app' 
+  origin: 'https://techfest-frontend-psi.vercel.app', // Your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  credentials: true, // Allow cookies if needed
 }));
 
 app.use(express.json());
