@@ -13,7 +13,7 @@
     }
   ],
   "functions": {
-    "api/events": {
+    "server.js": {
       "maxDuration": 10
     }
   }
