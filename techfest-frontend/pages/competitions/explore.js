@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Card, Button } from "antd";
+import { Card, Button, message } from "antd";
+import axios from "axios";
 import classes from "./explore.module.css";
 import { useAppContext } from "../../context/state";
 import RegistrationModal from "../../components/RegistrationModal";
@@ -14,24 +15,31 @@ const Explore = () => {
   const event = eventList.find((e) => e.event_id === event_id);
   const [isRegistrationModalVisible, setIsRegistrationModalVisible] = useState(false);
   const [selectedNavItem, setSelectedNavItem] = useState("About");
+  const [loading, setLoading] = useState(false); // Move useState to the top level
 
   if (!event) return <p>Event not found</p>;
 
   const handleRegisterClick = () => {
-    setIsRegistrationModalVisible(true);
-  };
-
-  const handleRegister = async (values) => {
-    try {
-      await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/register`, {
-        ...values,
-        event_id: event.event_id,
-      });
-      alert(`Registered for ${event.event_name}`);
-    } catch (err) {
-      console.error("Failed to register for event", err);
+    if (!loading) {
+      setIsRegistrationModalVisible(true);
     }
   };
+
+  // const handleRegister = async (values) => {
+  //   if (loading) return; // Prevent multiple submissions
+  //   setLoading(true);
+  //   try {
+  //     await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/register`, {
+  //       ...values,
+  //       event_id: event.event_id,
+  //     });
+  //     message.success(`Registered for ${event.event_name}`);
+  //   } catch (error) {
+  //     message.error(error.response?.data?.error || "Failed to register. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const renderContent = () => {
     switch (selectedNavItem) {
