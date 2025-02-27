@@ -68,7 +68,7 @@ function CompetitionDetails() {
       document.body.appendChild(script);
     });
   }
-  useEffect(async () => {
+  useEffect(() => {
     if (router.isReady) {
       let eventList = [];
       let filterdEvents = [];

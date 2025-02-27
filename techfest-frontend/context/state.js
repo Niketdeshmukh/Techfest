@@ -10,6 +10,7 @@ export function AppWrapper({ children }) {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        console.log("API URL:", process.env.NEXT_PUBLIC_FETCH_API);
         const response = await axios.get(`${process.env.NEXT_PUBLIC_FETCH_API}/events`);
         setEventList(response.data);
       } catch (err) {
