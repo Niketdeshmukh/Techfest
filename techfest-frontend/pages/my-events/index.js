@@ -26,6 +26,7 @@ function MyEvents() {
 
     setIsLoading(true);
     try {
+      console.log(`${process.env.NEXT_PUBLIC_FETCH_API}/events/registered`);
       const response = await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/registered`, { phone: value });
       setEventList(response.data);
     } catch (err) {
