@@ -25,21 +25,21 @@ const Explore = () => {
     }
   };
 
-  // const handleRegister = async (values) => {
-  //   if (loading) return; // Prevent multiple submissions
-  //   setLoading(true);
-  //   try {
-  //     await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/register`, {
-  //       ...values,
-  //       event_id: event.event_id,
-  //     });
-  //     message.success(`Registered for ${event.event_name}`);
-  //   } catch (error) {
-  //     message.error(error.response?.data?.error || "Failed to register. Please try again.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const handleRegister = async (values) => {
+    if (loading) return; // Prevent multiple submissions
+    setLoading(true);
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_FETCH_API}/events/register`, {
+        ...values,
+        event_id: event.event_id,
+      });
+      message.success(`Registered for ${event.event_name}`);
+    } catch (error) {
+      message.error(error.response?.data?.error || "Failed to register. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const renderContent = () => {
     switch (selectedNavItem) {
