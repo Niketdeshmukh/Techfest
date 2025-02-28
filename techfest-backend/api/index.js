@@ -2,7 +2,10 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "https://techfest-frontend-psi.vercel.app",
+    credentials: true,
+}));
 app.use(express.json());
 
 // Import routes
