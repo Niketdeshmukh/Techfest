@@ -1,3 +1,6 @@
+import axios from "axios";
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "https://techfest-backend-24eu3bm1b-nikets-projects-8738e377.vercel.app/api";
 import "../styles/globals.css";
 import "antd/dist/antd.css";
 import "../styles/Slider.css";
